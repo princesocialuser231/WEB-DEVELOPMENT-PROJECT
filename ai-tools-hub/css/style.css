@@ -1,0 +1,643 @@
+@charset "UTF-8";
+/* =====================================================
+   AI Tools Hub - style.css  (one stylesheet for ALL pages)
+   Every page links it with: <link rel="stylesheet" href="css/style.css">
+   Sections: 1 Variables  2 Base  3 Navbar  4 Hero  5 Stats
+             6 Cards  7 Tabs  8 Tables  9 Tool page  10 Forms
+             11 Footer  12 Animation  13 Responsive
+   ===================================================== */
+
+/* ---------- 1. VARIABLES (colours and fonts in one place) ---------- */
+:root{
+  --ink:#1B2150;
+  --violet:#5B3FD6;
+  --pink:#D6336C;
+  --paper:#F4F5FB;
+  --white:#ffffff;
+  --line:#D9DCEE;
+  --muted:#555B80;
+
+  /* one colour per category */
+  --writing:#3B5BDB;
+  --coding:#2B8A3E;
+  --design:#E8590C;
+  --image:#AE3EC9;
+  --audio:#0CA678;
+  --video:#D6336C;
+  --study:#C47F00;
+
+  --head:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Lexend",Verdana,sans-serif;
+  --shadow:0 4px 12px rgba(27,33,80,.15);
+}
+
+/* ---------- 2. BASE ---------- */
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  font-family:var(--body);
+  font-size:1rem;
+  line-height:1.65;
+  color:var(--ink);
+  background-color:var(--paper);
+  /* dotted background pattern made with a radial gradient */
+  background-image:radial-gradient(var(--line) 1.2px, transparent 1.2px);
+  background-size:24px 24px;
+}
+h1,h2,h3{
+  font-family:var(--head);
+  line-height:1.15;
+  margin:0 0 .6rem;
+}
+h1{
+  font-size:clamp(2rem,5vw,3.3rem);
+  max-width:20ch;
+}
+h2{
+  font-size:1.7rem;
+}
+h3{
+  font-size:1.2rem;
+}
+p,li{
+  max-width:68ch;
+}
+a{
+  color:var(--violet);
+  text-underline-offset:3px;
+}
+a:hover{
+  color:var(--pink);
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:3px solid var(--pink);
+  outline-offset:2px;
+}
+main{
+  max-width:1050px;
+  margin:0 auto;
+  padding:2rem 1.25rem 3.5rem;
+}
+section{
+  margin-bottom:3rem;
+}
+section[id]{
+  scroll-margin-top:5rem;
+}
+
+/* coloured bar under the main heading of inner pages */
+main > h1::after{
+  content:"";
+  display:block;
+  width:90px;
+  height:7px;
+  margin-top:.6rem;
+  border-radius:4px;
+  background:linear-gradient(90deg,var(--violet),var(--pink));
+}
+
+/* section headings get a small coloured marker */
+section > h2{
+  padding-left:.8rem;
+  border-left:8px solid var(--violet);
+}
+
+/* ---------- 3. NAVBAR (Flexbox + sticky) ---------- */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:linear-gradient(90deg,var(--ink),#2D2A7A);
+  border-bottom:4px solid var(--pink);
+}
+.site-header nav{
+  max-width:1050px;
+  margin:0 auto;
+  padding:.7rem 1.25rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
+.brand{
+  font-family:var(--head);
+  font-weight:800;
+  font-size:1.35rem;
+  color:var(--white);
+  text-decoration:none;
+}
+.brand::before{
+  content:"🤖 ";
+}
+.site-header ul{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.site-header li a{
+  display:block;
+  padding:.35rem .85rem;
+  border-radius:999px;
+  color:#D5DAFF;
+  text-decoration:none;
+  transition:background .2s, color .2s;
+}
+.site-header li a:hover{
+  background:rgba(255,255,255,.18);
+  color:var(--white);
+}
+.site-header li a[aria-current]{
+  background:var(--pink);
+  color:var(--white);
+}
+
+/* ---------- 4. HERO ---------- */
+.hero{
+  position:relative;
+  overflow:hidden;
+  color:var(--white);
+  padding:2.5rem 1.75rem 2rem;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--ink) 0%,var(--violet) 60%,var(--pink) 100%);
+  box-shadow:var(--shadow);
+}
+/* two decorative circles using pseudo-elements */
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+}
+.hero::before{
+  width:260px;
+  height:260px;
+  top:-90px;
+  right:-60px;
+}
+.hero::after{
+  width:150px;
+  height:150px;
+  bottom:-60px;
+  left:42%;
+}
+.hero > *{
+  position:relative;
+  z-index:1;
+}
+.hero h1{
+  color:var(--white);
+}
+.hero p{
+  color:#E4E7FF;
+  font-size:1.15rem;
+}
+
+/* task buttons inside the hero */
+.tasks{
+  list-style:none;
+  padding:0;
+  margin:1.5rem 0 0;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:.8rem;
+}
+.tasks a{
+  display:block;
+  padding:.85rem 1rem;
+  background:var(--white);
+  color:var(--ink);
+  font-weight:500;
+  text-decoration:none;
+  border-radius:10px;
+  border-left:10px solid var(--writing);
+  transition:transform .2s, box-shadow .2s;
+}
+.tasks a:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 8px 16px rgba(0,0,0,.25);
+  color:var(--ink);
+}
+.tasks .c-writing a{border-left-color:var(--writing);}
+.tasks .c-coding a{border-left-color:var(--coding);}
+.tasks .c-design a{border-left-color:var(--design);}
+.tasks .c-image a{border-left-color:var(--image);}
+.tasks .c-audio a{border-left-color:var(--audio);}
+.tasks .c-video a{border-left-color:var(--video);}
+.tasks .c-study a{border-left-color:var(--study);}
+
+/* ---------- 5. STATS STRIP (home page) ---------- */
+.stats{
+  list-style:none;
+  padding:0;
+  margin:0 0 3rem;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1rem;
+}
+.stats li{
+  text-align:center;
+  padding:1rem .5rem;
+  background:var(--white);
+  border-radius:12px;
+  border-bottom:6px solid var(--violet);
+  box-shadow:var(--shadow);
+}
+.stats li:nth-child(2){border-bottom-color:var(--audio);}
+.stats li:nth-child(3){border-bottom-color:var(--design);}
+.stats li:nth-child(4){border-bottom-color:var(--pink);}
+.stats strong{
+  display:block;
+  font-family:var(--head);
+  font-size:2.2rem;
+  line-height:1;
+}
+
+/* ---------- 6. CARDS ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.2rem;
+}
+.card{
+  position:relative;
+  padding:1.2rem;
+  background:var(--white);
+  border-radius:14px;
+  border-top:8px solid var(--writing);
+  box-shadow:var(--shadow);
+  transition:transform .2s, box-shadow .2s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 24px rgba(27,33,80,.25);
+}
+.card.writing{border-top-color:var(--writing);}
+.card.coding{border-top-color:var(--coding);}
+.card.design{border-top-color:var(--design);}
+.card.image{border-top-color:var(--image);}
+.card.audio{border-top-color:var(--audio);}
+.card.video{border-top-color:var(--video);}
+.card.study{border-top-color:var(--study);}
+
+/* paid cards get a soft tinted background */
+.card.paid{
+  background:linear-gradient(180deg,#EEF0FF,var(--white));
+}
+
+/* category icon before each card title */
+.card h3::before{
+  display:inline-block;
+  width:2.2rem;
+  height:2.2rem;
+  line-height:2.2rem;
+  margin-right:.5rem;
+  text-align:center;
+  border-radius:50%;
+  background:var(--paper);
+  font-size:1.1rem;
+}
+.card.writing h3::before{content:"✍️";}
+.card.coding h3::before{content:"💻";}
+.card.design h3::before{content:"🎨";}
+.card.image h3::before{content:"🖼️";}
+.card.audio h3::before{content:"🎵";}
+.card.video h3::before{content:"🎬";}
+.card.study h3::before{content:"📚";}
+
+.tag{
+  margin:0 0 .5rem;
+  font-size:.85rem;
+  font-weight:500;
+  color:var(--muted);
+}
+
+/* small pill labels: Free plan / Paid */
+.badge{
+  display:inline-block;
+  margin-left:.4rem;
+  padding:.05rem .6rem;
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--white);
+  background:var(--pink);
+  border-radius:999px;
+  vertical-align:middle;
+}
+.badge.free{
+  background:var(--audio);
+}
+
+/* buttons */
+.btn{
+  display:inline-block;
+  padding:.55rem 1.1rem;
+  font:inherit;
+  font-weight:500;
+  color:var(--white);
+  text-decoration:none;
+  background:linear-gradient(90deg,var(--violet),var(--pink));
+  border:0;
+  border-radius:999px;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+}
+.btn:hover{
+  color:var(--white);
+  transform:translateY(-2px);
+  box-shadow:0 6px 12px rgba(91,63,214,.4);
+}
+.btn:active{
+  transform:scale(.97);
+}
+.card .btn{
+  margin-right:.5rem;
+  padding:.4rem .9rem;
+}
+
+/* highlighted note box */
+.note{
+  padding:.8rem 1rem;
+  background:#FFF8E1;
+  border-left:8px solid var(--study);
+  border-radius:0 8px 8px 0;
+}
+
+/* ---------- 7. CATEGORY TABS ---------- */
+.tabs{
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+  padding:0;
+  margin:1rem 0 2.2rem;
+}
+.tabs a{
+  display:block;
+  padding:.4rem 1rem;
+  font-weight:500;
+  color:var(--ink);
+  text-decoration:none;
+  background:var(--white);
+  border:2px solid var(--violet);
+  border-radius:999px;
+  transition:background .2s, color .2s, transform .2s;
+}
+.tabs a:hover{
+  color:var(--white);
+  background:var(--violet);
+  transform:translateY(-2px);
+}
+
+/* ---------- 8. TABLES ---------- */
+.table-wrap{
+  overflow-x:auto;
+  background:var(--white);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+caption{
+  padding:.7rem 1rem;
+  text-align:left;
+  color:var(--muted);
+  font-size:.9rem;
+}
+th,td{
+  padding:.75rem 1rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+thead th{
+  color:var(--white);
+  background:linear-gradient(90deg,var(--ink),var(--violet));
+  border-bottom:0;
+}
+tbody th{
+  font-family:var(--head);
+}
+tbody tr:nth-child(even){
+  background:#F4F5FF;
+}
+tbody tr:hover{
+  background:#E3E7FF;
+}
+
+/* ---------- 9. TOOL PAGE ---------- */
+.back{
+  display:inline-block;
+  margin-bottom:1rem;
+  font-weight:500;
+}
+.tool-layout{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:2rem;
+  align-items:start;
+}
+.tool-layout section{
+  margin-bottom:2rem;
+}
+
+/* Quick facts box */
+.facts{
+  padding:1.2rem;
+  background:var(--white);
+  border-radius:14px;
+  border-top:8px solid var(--pink);
+  box-shadow:var(--shadow);
+}
+.facts h2{
+  font-size:1.25rem;
+}
+.facts dt{
+  margin-top:.8rem;
+  font-weight:500;
+}
+.facts dd{
+  margin:0;
+  color:var(--muted);
+}
+.facts ul{
+  padding-left:1.1rem;
+}
+
+/* numbered steps with round counters (a real sequence) */
+.steps{
+  list-style:none;
+  padding:0;
+  counter-reset:step;
+}
+.steps li{
+  position:relative;
+  margin-bottom:.8rem;
+  padding:.7rem 1rem .7rem 3.4rem;
+  background:var(--white);
+  border-radius:10px;
+  box-shadow:var(--shadow);
+  counter-increment:step;
+}
+.steps li::before{
+  content:counter(step);
+  position:absolute;
+  top:50%;
+  left:.8rem;
+  width:2rem;
+  height:2rem;
+  margin-top:-1rem;
+  line-height:2rem;
+  text-align:center;
+  font-weight:700;
+  color:var(--white);
+  background:var(--violet);
+  border-radius:50%;
+}
+
+/* related tool pills */
+.related{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+  list-style:none;
+  padding:0;
+}
+.related a{
+  display:block;
+  padding:.35rem 1rem;
+  color:var(--ink);
+  text-decoration:none;
+  background:var(--white);
+  border:2px solid var(--violet);
+  border-radius:999px;
+}
+.related a:hover{
+  color:var(--white);
+  background:var(--violet);
+}
+
+/* ---------- 10. FORMS ---------- */
+.contact-layout{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  gap:2rem;
+}
+.contact-layout form{
+  flex:2;
+  min-width:280px;
+}
+.contact-layout aside{
+  flex:1;
+  min-width:220px;
+}
+form{
+  max-width:600px;
+  padding:1.5rem;
+  background:var(--white);
+  border-radius:14px;
+  border-top:8px solid var(--violet);
+  box-shadow:var(--shadow);
+}
+label{
+  display:block;
+  margin:1rem 0 .3rem;
+  font-weight:500;
+}
+input[type=text],
+input[type=email],
+select,
+textarea{
+  width:100%;
+  padding:.65rem .8rem;
+  font:inherit;
+  background:var(--paper);
+  border:2px solid var(--line);
+  border-radius:8px;
+  transition:border-color .2s, background .2s;
+}
+input:focus,
+select:focus,
+textarea:focus{
+  background:var(--white);
+  border-color:var(--violet);
+}
+fieldset{
+  margin-top:1rem;
+  border:2px solid var(--line);
+  border-radius:8px;
+}
+fieldset label{
+  display:inline-block;
+  margin:.3rem 1rem .3rem 0;
+  font-weight:400;
+}
+
+/* ---------- 11. FOOTER ---------- */
+.site-footer{
+  padding:1.8rem 1rem;
+  text-align:center;
+  color:#D5DAFF;
+  background:linear-gradient(90deg,var(--ink),#2D2A7A);
+  border-top:4px solid var(--pink);
+}
+.site-footer p{
+  margin:.3rem auto;
+}
+.site-footer a{
+  margin:0 .6rem;
+  color:var(--white);
+}
+.site-footer a:hover{
+  color:#FFB3CE;
+}
+
+/* ---------- 12. ANIMATION (one soft entrance on the hero only) ---------- */
+@keyframes rise{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero{
+  animation:rise .7s ease-out;
+}
+@media (prefers-reduced-motion:reduce){
+  *{
+    animation:none !important;
+    transition:none !important;
+  }
+}
+
+/* ---------- 13. RESPONSIVE (media queries) ---------- */
+@media (max-width:800px){
+  .tool-layout{
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width:600px){
+  .site-header nav{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .hero{
+    padding:1.5rem 1rem;
+  }
+  h2{
+    font-size:1.4rem;
+  }
+  main{
+    padding-top:1.25rem;
+  }
+}
